@@ -1,0 +1,101 @@
+/*
+ * Copyright (c) 2025 Your Name
+ * SPDX-License-Identifier: MIT
+ *
+ * Base keymap for Chocofi (3x5 + 3 thumb keys)
+ * Layers:
+ * - 0: QWERTY Base w/ Mac Home Row Mods
+ * - 1: Numbers & Symbols
+ * - 2: Function Keys & Navigation
+ */
+
+#include <behaviors.dtsi>
+#include <dt-bindings/zmk/keys.h>
+#include <dt-bindings/zmk/bt.h>        // Include Bluetooth keycodes
+#include <dt-bindings/zmk/outputs.h>   // Include Output keycodes
+#include <dt-bindings/zmk/modifiers.h> // Include modifiers like LCTL, LGUI (Cmd for Mac)
+
+// Define tapping term for home row mods (milliseconds)
+// This value is used if not overridden by the behavior definition itself
+// or the global Kconfig setting. We'll use the behavior definition primarily.
+#define TAPPING_TERM 200
+
+/ {
+    behaviors {
+        // Define Home Row Mods Left Hand (Mac Order: Cmd, Opt, Ctrl, Shift)
+        // Using 'tap-preferred' flavor and quick-tap-ms for better feel with home row mods.
+        hm_l_a: hml_a { compatible = "zmk,behavior-hold-tap"; label = "HML_A"; #binding-cells = <2>; tapping-term-ms = <TAPPING_TERM>; flavor = "tap-preferred"; bindings = <&kp>, <&kp>; quick-tap-ms = <TAPPING_TERM>; };
+        hm_l_s: hml_s { compatible = "zmk,behavior-hold-tap"; label = "HML_S"; #binding-cells = <2>; tapping-term-ms = <TAPPING_TERM>; flavor = "tap-preferred"; bindings = <&kp>, <&kp>; quick-tap-ms = <TAPPING_TERM>; };
+        hm_l_d: hml_d { compatible = "zmk,behavior-hold-tap"; label = "HML_D"; #binding-cells = <2>; tapping-term-ms = <TAPPING_TERM>; flavor = "tap-preferred"; bindings = <&kp>, <&kp>; quick-tap-ms = <TAPPING_TERM>; };
+        hm_l_f: hml_f { compatible = "zmk,behavior-hold-tap"; label = "HML_F"; #binding-cells = <2>; tapping-term-ms = <TAPPING_TERM>; flavor = "tap-preferred"; bindings = <&kp>, <&kp>; quick-tap-ms = <TAPPING_TERM>; };
+
+        // Define Home Row Mods Right Hand (Mac Order: Shift, Ctrl, Opt, Cmd)
+        hm_r_j: hmr_j { compatible = "zmk,behavior-hold-tap"; label = "HMR_J"; #binding-cells = <2>; tapping-term-ms = <TAPPING_TERM>; flavor = "tap-preferred"; bindings = <&kp>, <&kp>; quick-tap-ms = <TAPPING_TERM>; };
+        hm_r_k: hmr_k { compatible = "zmk,behavior-hold-tap"; label = "HMR_K"; #binding-cells = <2>; tapping-term-ms = <TAPPING_TERM>; flavor = "tap-preferred"; bindings = <&kp>, <&kp>; quick-tap-ms = <TAPPING_TERM>; };
+        hm_r_l: hmr_l { compatible = "zmk,behavior-hold-tap"; label = "HMR_L"; #binding-cells = <2>; tapping-term-ms = <TAPPING_TERM>; flavor = "tap-preferred"; bindings = <&kp>, <&kp>; quick-tap-ms = <TAPPING_TERM>; };
+        hm_r_sc: hmr_sc { compatible = "zmk,behavior-hold-tap"; label = "HMR_SC"; #binding-cells = <2>; tapping-term-ms = <TAPPING_TERM>; flavor = "tap-preferred"; bindings = <&kp>, <&kp>; quick-tap-ms = <TAPPING_TERM>; }; // Semicolon key mod
+    };
+
+    keymap {
+        compatible = "zmk,keymap";
+
+        // Layer 0: Base QWERTY Layer
+        // ----------------------------------------------------------------------------------------------------------------------
+        // |  Q  |  W  |  E  |  R  |  T  |       |  Y  |  U  |  I  |  O  |  P  |
+        // | A(Cmd)| S(Opt)| D(Ctl)| F(Sft)|  G  |       |  H  | J(Sft)| K(Ctl)| L(Opt)| ;(Cmd)|
+        // |  Z  |  X  |  C  |  V  |  B  |       |  N  |  M  |  ,  |  .  |  /  |
+        // ----------------------------------------------------------------------------------------------------------------------
+        //             | ESC | L1 Tg | SPC |       | Bksp| L2 Tg | RET |
+        //             -------------------------------------------------
+        base_layer {
+            // Matches the Chocofi 3x5+3 layout
+            bindings = <
+            /* Left Hand */                                           /* Right Hand */
+            &kp Q          &kp W          &kp E             &kp R           &kp T           &kp Y          &kp U            &kp I          &kp O           &kp P
+            &hm_l_a LGUI A &hm_l_s LALT S &hm_l_d LCTRL D   &hm_l_f LSFT F  &kp G           &kp H          &hm_r_j RSFT J &hm_r_k RCTRL K  &hm_r_l RALT L  &hm_r_sc RGUI SEMI
+            &kp Z          &kp X          &kp C             &kp V           &kp B           &kp N          &kp M            &kp COMMA      &kp DOT         &kp SLASH
+                                          /* Left Thumb */                                  /* Right Thumb */
+                                          &kp ESC           &to 1           &kp SPACE       &kp BSPC       &to 2            &kp ENTER
+            >;
+        };
+
+        // Layer 1: Numbers & Symbols Layer
+        // ----------------------------------------------------------------------------------------------------------------------
+        // |  !  |  @  |  #  |  $  |  %  |       |  ^  |  &  |  * |  (  |  )  |
+        // |  1  |  2  |  3  |  4  |  5  |       |  6  |  7  |  8  |  9  |  0  |
+        // |  `  |  ~  | [ | ] |  |  |       |  _  |  -  |  +  |  =  |  \  |
+        // ----------------------------------------------------------------------------------------------------------------------
+        //             | TRNS| L1 Tg | TRNS|       | TRNS| L2 Tg | TRNS|
+        //             -------------------------------------------------
+        number_symbol_layer {
+            bindings = <
+            /* Left Hand */                                           /* Right Hand */
+            &kp EXCL       &kp AT         &kp HASH       &kp DLLR       &kp PRCNT         &kp CARET       &kp AMPS       &kp ASTRK      &kp LPAR      &kp RPAR
+            &kp N1         &kp N2         &kp N3         &kp N4         &kp N5            &kp N6          &kp N7         &kp N8         &kp N9        &kp N0
+            &kp GRAVE      &kp TILDE      &kp LBKT       &kp RBKT       &kp PIPE          &kp UNDERSCORE  &kp MINUS      &kp PLUS       &kp EQUAL     &kp BSLH
+                                          /* Left Thumb */                                  /* Right Thumb */
+                                          &trans         &to 1          &trans            &trans          &to 2          &trans
+            >;
+        };
+
+        // Layer 2: Function & Navigation Layer
+        // ----------------------------------------------------------------------------------------------------------------------
+        // | F1  | F2  | F3  | F4  | F5  |       | F6  | F7  | F8  | F9  | F10 |
+        // | F11 | F12 | GUI | ALT | CTRL|       |LEFT |DOWN | UP  |RIGHT| DEL |
+        // | BT CLR| BT 0| BT 1| BT 2| BT 3|       |HOME |PGDN |PGUP | END | CAPS|
+        // ----------------------------------------------------------------------------------------------------------------------
+        //             | TRNS| L1 Tg | TRNS|       | TRNS| L2 Tg | TRNS|
+        //             -------------------------------------------------
+        function_nav_layer {
+            bindings = <
+            /* Left Hand */                                           /* Right Hand */
+            &kp F1         &kp F2         &kp F3         &kp F4         &kp F5            &kp F6          &kp F7          &kp F8           &kp F9           &kp F10
+            &kp F11        &kp F12        &kp LGUI       &kp LALT       &kp LCTRL         &kp LEFT        &kp DOWN        &kp UP           &kp RIGHT        &kp DEL
+            &bt BT_CLR     &bt BT_SEL 0   &bt BT_SEL 1   &bt BT_SEL 2   &bt BT_SEL 3      &kp HOME        &kp PG_DN       &kp PG_UP        &kp END          &kp CAPS
+                                          /* Left Thumb */                                  /* Right Thumb */
+                                          &trans         &to 1          &trans            &trans          &to 2           &trans
+            >;
+        };
+
+    }; // End keymap
+}; // End root node

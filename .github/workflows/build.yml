@@ -1,0 +1,14 @@
+# Copyright (c) 2020 The ZMK Contributors
+# SPDX-License-Identifier: MIT
+
+name: 'Build Chocofi Firmware'
+
+on: [push, pull_request, workflow_dispatch] # Triggers the build on pushes, pull requests, or manual dispatch
+
+jobs:
+  build:
+    uses: zmkfirmware/zmk/.github/workflows/build-user-config.yml@main
+    # This uses the reusable workflow from the main ZMK repository.
+    # It automatically detects your .conf file and builds the firmware.
+    # Ensure your board/shield names in chocofi.conf are correct.
+    secrets: inherit # Pass secrets like GITHUB_TOKEN if needed by the workflow
