@@ -9,6 +9,20 @@ jobs:
   build:
     uses: zmkfirmware/zmk/.github/workflows/build-user-config.yml@main
     # This uses the reusable workflow from the main ZMK repository.
-    # It automatically detects your .conf file and builds the firmware.
-    # Ensure your board/shield names in chocofi.conf are correct.
     secrets: inherit # Pass secrets like GITHUB_TOKEN if needed by the workflow
+    with:
+      # Explicitly define the boards and shields to build.
+      # IMPORTANT: Ensure these shield names ('chocofi_left', 'chocofi_right')
+      # exactly match the names used in your chocofi.conf file and are correct
+      # for your specific Chocofi revision.
+      # The board 'nice_nano_v2' should be correct for your controllers.
+      # The format is a JSON array of objects.
+      include: |
+        [
+          { "board": "nice_nano_v2", "shield": "chocofi_left" },
+          { "board": "nice_nano_v2", "shield": "chocofi_right" }
+        ]
+      # --- Alternative format (if include doesn't work, try this): ---
+      # board: nice_nano_v2
+      # shield: chocofi_left chocofi_right # Space-separated list for multiple shields with the SAME board
+      # Note: The 'include' matrix format above is generally preferred for split keyboards.
