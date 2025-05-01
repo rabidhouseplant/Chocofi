@@ -2,7 +2,9 @@
  * Copyright (c) 2025 Your Name
  * SPDX-License-Identifier: MIT
  *
- * Base keymap for Chocofi (3x5 + 3 thumb keys)
+ * Keymap for Corne keyboard configured with a 3x5 + 3 thumb key layout.
+ * (This deviates from the standard 3x6+3 Corne layout)
+ *
  * Layers:
  * - 0: QWERTY Base w/ Mac Home Row Mods
  * - 1: Numbers & Symbols
@@ -16,14 +18,11 @@
 #include <dt-bindings/zmk/modifiers.h> // Include modifiers like LCTL, LGUI (Cmd for Mac)
 
 // Define tapping term for home row mods (milliseconds)
-// This value is used if not overridden by the behavior definition itself
-// or the global Kconfig setting. We'll use the behavior definition primarily.
 #define TAPPING_TERM 200
 
 / {
     behaviors {
         // Define Home Row Mods Left Hand (Mac Order: Cmd, Opt, Ctrl, Shift)
-        // Using 'tap-preferred' flavor and quick-tap-ms for better feel with home row mods.
         hm_l_a: hml_a { compatible = "zmk,behavior-hold-tap"; label = "HML_A"; #binding-cells = <2>; tapping-term-ms = <TAPPING_TERM>; flavor = "tap-preferred"; bindings = <&kp>, <&kp>; quick-tap-ms = <TAPPING_TERM>; };
         hm_l_s: hml_s { compatible = "zmk,behavior-hold-tap"; label = "HML_S"; #binding-cells = <2>; tapping-term-ms = <TAPPING_TERM>; flavor = "tap-preferred"; bindings = <&kp>, <&kp>; quick-tap-ms = <TAPPING_TERM>; };
         hm_l_d: hml_d { compatible = "zmk,behavior-hold-tap"; label = "HML_D"; #binding-cells = <2>; tapping-term-ms = <TAPPING_TERM>; flavor = "tap-preferred"; bindings = <&kp>, <&kp>; quick-tap-ms = <TAPPING_TERM>; };
@@ -39,7 +38,7 @@
     keymap {
         compatible = "zmk,keymap";
 
-        // Layer 0: Base QWERTY Layer
+        // Layer 0: Base QWERTY Layer (3x5+3 layout)
         // ----------------------------------------------------------------------------------------------------------------------
         // |  Q  |  W  |  E  |  R  |  T  |       |  Y  |  U  |  I  |  O  |  P  |
         // | A(Cmd)| S(Opt)| D(Ctl)| F(Sft)|  G  |       |  H  | J(Sft)| K(Ctl)| L(Opt)| ;(Cmd)|
@@ -48,7 +47,7 @@
         //             | ESC | L1 Tg | SPC |       | Bksp| L2 Tg | RET |
         //             -------------------------------------------------
         base_layer {
-            // Matches the Chocofi 3x5+3 layout
+            // Matches the 3x5+3 layout
             bindings = <
             /* Left Hand */                                           /* Right Hand */
             &kp Q          &kp W          &kp E             &kp R           &kp T           &kp Y          &kp U            &kp I          &kp O           &kp P
@@ -59,7 +58,7 @@
             >;
         };
 
-        // Layer 1: Numbers & Symbols Layer
+        // Layer 1: Numbers & Symbols Layer (3x5+3 layout)
         // ----------------------------------------------------------------------------------------------------------------------
         // |  !  |  @  |  #  |  $  |  %  |       |  ^  |  &  |  * |  (  |  )  |
         // |  1  |  2  |  3  |  4  |  5  |       |  6  |  7  |  8  |  9  |  0  |
@@ -78,7 +77,7 @@
             >;
         };
 
-        // Layer 2: Function & Navigation Layer
+        // Layer 2: Function & Navigation Layer (3x5+3 layout)
         // ----------------------------------------------------------------------------------------------------------------------
         // | F1  | F2  | F3  | F4  | F5  |       | F6  | F7  | F8  | F9  | F10 |
         // | F11 | F12 | GUI | ALT | CTRL|       |LEFT |DOWN | UP  |RIGHT| DEL |
