@@ -7,15 +7,10 @@ on: [push, pull_request, workflow_dispatch] # Triggers the build on pushes, pull
 
 jobs:
   build:
+    # Use the standard ZMK user config build workflow.
+    # This workflow automatically discovers .conf files in the 'config/' directory
+    # and builds the firmware based on the shield settings within them.
     uses: zmkfirmware/zmk/.github/workflows/build-user-config.yml@main
-    # This uses the reusable workflow from the main ZMK repository.
-    secrets: inherit # Pass secrets like GITHUB_TOKEN if needed by the workflow
-    with:
-      # Explicitly define the board and shields to build.
-      # IMPORTANT: Ensure these shield names ('chocofi_left', 'chocofi_right')
-      # exactly match the names used in your chocofi.conf file and are correct
-      # for your specific Chocofi revision.
-      # The board 'nice_nano_v2' should be correct for your controllers.
-      board: nice_nano_v2
-      # Provide a space-separated list of shields associated with the board.
-      shield: chocofi_left chocofi_right
+    # Pass secrets like GITHUB_TOKEN required by the underlying workflow.
+    secrets: inherit
+    # No 'with:' block is needed here; the workflow handles discovery.
